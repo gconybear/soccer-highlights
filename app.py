@@ -5,17 +5,25 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import api_call
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.JOURNAL])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 server = app.server
 
 DROPDOWN_WIDTH = '500px'
+DROPDOWN_COLOR = '#000000'
 
 global data
 data = api_call.getHighlights()
 
-league_drop = dcc.Dropdown(id='league-drop', options=[
+# data = {
+#     'a': [(1,2,4)]
+# }
+
+# style={'padding-left':'25px'}
+
+league_drop = html.Div(children=[dcc.Dropdown(id='league-drop', options=[
     {'label': i, 'value': i} for i in sorted(list(data.keys()))
-], placeholder="Choose League / Competition....", style={'width': DROPDOWN_WIDTH})
+], placeholder="Choose League / Competition....", style={'width': DROPDOWN_WIDTH,
+                                                         'color': DROPDOWN_COLOR})])
 
 body = html.Div([
     dbc.Row(
@@ -24,7 +32,11 @@ body = html.Div([
             ], justify="center", align="center", className="h-50"
             ),
     html.Br(),
-    html.Center([league_drop, html.Div(id='second-drop-con')]),
+    dbc.Row([
+        # dbc.Col(html.Label('Choose League and Match: ')),
+        dbc.Col(html.Div(league_drop)),
+        dbc.Col(html.Div(id='second-drop-con'))
+    ], align='center'),
     html.Br(), html.Hr(),
     html.Div(id='vid')
 
@@ -43,7 +55,9 @@ def second_drop(val):
     second = dcc.Dropdown(id='game-drop',
                           options=[
                               {'label': game, 'value': source} for (game, source) in games_embed
-                          ], placeholder="Choose Match...")
+                          ], placeholder="Choose Match...", style={'width': DROPDOWN_WIDTH,
+                                                         'color': DROPDOWN_COLOR})
+
 
     return second
 
