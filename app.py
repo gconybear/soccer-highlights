@@ -8,7 +8,7 @@ import api_call
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.JOURNAL])
 server = app.server
 
-DROPDOWN_WIDTH = '200px'
+DROPDOWN_WIDTH = '500px'
 
 global data
 data = api_call.getHighlights()
