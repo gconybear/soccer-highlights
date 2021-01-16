@@ -79,6 +79,6 @@ def show_vid(league, source):
 
 
 if __name__ == "__main__":
-    app.run_server(debug=True, port=7050)
+    app.run_server(debug=False, port=7050)
 
 
